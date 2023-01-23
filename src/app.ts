@@ -3,6 +3,7 @@ import cors from "cors";
 
 // utils
 import ServerResponse from "./utils/response";
+import ErrorMiddleware from "./middleware/error";
 
 class App {
   express: Application;
@@ -45,6 +46,7 @@ class App {
         }
       });
   
+      this.express.use(ErrorMiddleware);
   }
 
   listen(port: string, cb: () => void) {
