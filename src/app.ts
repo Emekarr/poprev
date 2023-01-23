@@ -5,6 +5,9 @@ import cors from "cors";
 import ServerResponse from "./utils/response";
 import ErrorMiddleware from "./middleware/error";
 
+// start ups
+import("./startup/index").then((startup) => startup.default());
+
 class App {
   express: Application;
 
