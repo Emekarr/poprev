@@ -2,7 +2,7 @@ import { HasherType } from "./type";
 
 const bcrypt = require("bcrypt");
 
-export default class Hasher implements HasherType {
+class Hasher implements HasherType {
   private hasher = bcrypt;
 
   private saltRounds = 10;
@@ -19,3 +19,5 @@ export default class Hasher implements HasherType {
     return this.hasher.genSalt(this.saltRounds);
   }
 }
+
+export default Object.freeze(new Hasher());
