@@ -1,5 +1,5 @@
 export interface HasherType {
-  hashPassword(password: string): string;
-  verifyPassword(password: string, hash: string): boolean;
-  _genSalt(): number;
+  hashPassword(password: string): Promise<string>;
+  verifyPassword(password: string, hash: string): Promise<boolean>;
+  _genSalt(): Promise<string>;
 }

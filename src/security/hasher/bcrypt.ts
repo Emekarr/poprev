@@ -7,15 +7,15 @@ class Hasher implements HasherType {
 
   private saltRounds = 10;
 
-  hashPassword(password: string): string {
-    return this.hasher.hash(password, this._genSalt());
+  async hashPassword(password: string): Promise<string> {
+    return this.hasher.hash(password, await this._genSalt());
   }
 
-  verifyPassword(password: string, hash: string): boolean {
+  async verifyPassword(password: string, hash: string): Promise<boolean> {
     return this.hasher.compare(password, hash);
   }
 
-  _genSalt(): number {
+  async _genSalt(): Promise<string> {
     return this.hasher.genSalt(this.saltRounds);
   }
 }

@@ -22,7 +22,7 @@ export default abstract class CreateUserUseCase {
       email: result.value.email,
     });
     if (userExists != 0) throw new ClientError("email is already in use", 409);
-    result.value.password = this.hasher.hashPassword(result.value.password);
+    result.value.password = await this.hasher.hashPassword(result.value.password);
     // cache user
     const user = await this.redisRepo.createEntryAndExpire(
       `${result.value.email}-cached-user`,

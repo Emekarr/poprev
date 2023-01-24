@@ -19,7 +19,7 @@ export default abstract class CreateAdminUseCase {
       email: result.value.email,
     });
     if (adminExists != 0) throw new ClientError("email is already in use", 409);
-    result.value.password = this.hasher.hashPassword(result.value.password);
+    result.value.password = await this.hasher.hashPassword(result.value.password);
     const admin = await this.adminRepo.createEntry(result.value);
     if (admin == null) {
       console.log("report error to sentry");
