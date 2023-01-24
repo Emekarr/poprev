@@ -16,7 +16,7 @@ export default abstract class UserController {
       // send this through an event stream to avoid keeping the user waiting
       await emailService.send(
         payload.email,
-        `Your otp is ${otp}`,
+        `Your otp is ${otp}. This OTP will last for 10 mins.`,
         "Verify your PopRev account"
       );
       new ServerResponse("user created.", null, true).respond(res, 201);
