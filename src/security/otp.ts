@@ -11,3 +11,9 @@ export const generateOtp = async (key: string): Promise<string> => {
   );
   return otp;
 };
+
+export const verifyOtp = async (key: string, otp: string): Promise<boolean> => {
+  const savedOtp = await redisRepo.findOne(key);
+  if (savedOtp == null || "") return false;
+  return await hasher.verifyPassword(otp, savedOtp);
+};
