@@ -2,9 +2,9 @@ import Joi from "joi";
 import { joiPasswordExtendCore } from "joi-password";
 const JoiPassword = Joi.extend(joiPasswordExtendCore);
 
-import { Admin } from "../models/Admin";
+import { User } from "../models/User";
 
-export const validateNewAdminPayload = (payload: Admin) =>
+export const validateNewUserPayload = (payload: User) =>
   Joi.object({
     name: Joi.string().max(50).required(),
     email: Joi.string().email().max(100).required(),
@@ -16,4 +16,4 @@ export const validateNewAdminPayload = (payload: Admin) =>
       .minOfNumeric(1)
       .noWhiteSpaces()
       .required(),
-  }).validate(payload) as Joi.ValidationResult<Admin>;
+  }).validate(payload) as Joi.ValidationResult<User>;
