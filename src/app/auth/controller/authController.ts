@@ -11,6 +11,7 @@ import { emailService } from "../../../messaging";
 import { LoginPayload } from "../types";
 import LoginAdminUseCase from "../usecases/LoginAdminUseCase";
 import LoginUserUseCase from "../usecases/LoginUserUseCase";
+import ClientError from "../../../errors/ClientError";
 
 export default abstract class AuthController {
   static async loginAdmin(req: Request, res: Response, next: NextFunction) {
@@ -84,6 +85,7 @@ export default abstract class AuthController {
   static async resendOtp(req: Request, res: Response, next: NextFunction) {
     try {
       const { email } = req.query;
+      if (!email) throw new ClientError("pass in an email", 400);
       const otp = await generateOtp(`${email}-otp`);
       // send this through an event stream to avoid keeping the user waiting
       await emailService.send(
