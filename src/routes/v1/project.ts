@@ -10,4 +10,10 @@ router.get(
   ProjectController.fetchProjectTokens
 );
 
+router.post(
+  "/purchase",
+  AuthMiddleware(false),
+  ProjectController.purchaseToken
+);
+
 export default router;

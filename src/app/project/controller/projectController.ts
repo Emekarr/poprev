@@ -5,6 +5,7 @@ import ServerResponse from "../../../utils/response";
 import { Project } from "../model/Project";
 import projectTokenRepo from "../repository/projectTokenRepo";
 import CreateProjectUseCase from "../usecases/project/CreateProjectUseCase";
+import PurchaseProjectTokenUseCase from "../usecases/projectToken/PurchaseProjectTokenUseCase";
 
 export default abstract class ProjectController {
   static async createNewProject(
@@ -15,9 +16,7 @@ export default abstract class ProjectController {
     try {
       const payload: Project = req.body;
       payload.createdBy = req.user.id;
-     await CreateProjectUseCase.execute(
-        payload
-      );
+      await CreateProjectUseCase.execute(payload);
       new ServerResponse(
         "project created.",
         {
@@ -46,6 +45,20 @@ export default abstract class ProjectController {
         res,
         200
       );
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async purchaseToken(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.query;
+      const result = await PurchaseProjectTokenUseCase.execute(
+        id as string,
+        req.body.amount,
+        req.user.id
+      );
+      new ServerResponse("purchase complete", result, true).respond(res, 200);
     } catch (err) {
       next(err);
     }

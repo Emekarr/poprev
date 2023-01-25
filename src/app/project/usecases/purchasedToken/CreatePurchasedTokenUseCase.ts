@@ -19,19 +19,9 @@ export default abstract class CreatePurchasedTokenUseCase {
     transactionId: string,
     userId: string,
     amount: number,
+    name: string,
     session: ClientSession
   ): Promise<IPurchasedTokenDocument> {
-    const token = await this.projectTokenRepo.findById(tokenId);
-    if (!token) throw new ClientError("token does not exist", 404);
-    if (token.amountRemaining <= 0) {
-      throw new ClientError("this token is sold out", 400);
-    }
-    if (token.amountRemaining < amount) {
-      throw new ClientError(
-        `only ${token.amountRemaining} worth of token is available`,
-        400
-      );
-    }
     await this.projectTokenRepo.updateByIdTrx(
       tokenId,
       {
@@ -44,7 +34,7 @@ export default abstract class CreatePurchasedTokenUseCase {
         tokenId,
         transactionId,
         userId,
-        name: token.name,
+        name,
         amount,
       },
       { session }

@@ -11,9 +11,9 @@ export default abstract class CreateTransactionUseCase {
 
   private static validateNewTransactionPayload = validateNewTransactionPayload;
 
-  static async execute(payload: Transaction, session: ClientSession) {
+  static async execute(payload: Partial<Transaction>, session: ClientSession) {
     payload.trxId = generateTransactionId();
-    const result = this.validateNewTransactionPayload(payload);
+    const result = this.validateNewTransactionPayload(payload as Transaction);
     if (result.error) throw new ClientError(result.error.message, 400);
     const transaction = (
       await this.transactionRepo.createEntryTrx(result.value)
