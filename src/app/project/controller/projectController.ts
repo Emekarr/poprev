@@ -73,7 +73,7 @@ export default abstract class ProjectController {
     try {
       const { page, limit, id } = req.query;
       const tokens = await purchasedTokenRepo.findManyByFields(
-        { tokenId: id },
+        { tokenId: id, userId: req.user.id },
         {
           limit: Number(limit),
           page: Number(page),
