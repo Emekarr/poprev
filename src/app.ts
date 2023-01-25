@@ -1,5 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
+import rateLimiter, { Options } from "express-rate-limit";
 
 // utils
 import ServerResponse from "./utils/response";
@@ -25,6 +26,26 @@ class App {
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       })
     );
+
+    const limiter = rateLimiter({
+      windowMs: 60 * 1000, // 1 minute
+      max: 20, // Limit each IP to 20 requests per minute
+      standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+      legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+      onLimitReached: (
+        request: Request,
+        response: Response,
+        optionsUsed: Options
+      ) => {
+        return new ServerResponse(
+          "too many requests. slow down",
+          null,
+          false
+        ).respond(response, 429);
+      },
+    });
+
+    this.express.use(limiter);
 
     this.express.use(express.json({ limit: process.env.JSON_LIMIT }));
     this.express.use(
