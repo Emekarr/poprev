@@ -4,8 +4,8 @@ import AuthMiddleware from "../../middleware/auth";
 
 const router = Router();
 
-router.post(
-  "/create",
+router.get(
+  "/fetch",
   AuthMiddleware(false),
   ProjectController.fetchProjectTokens
 );
