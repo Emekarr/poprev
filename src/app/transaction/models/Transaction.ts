@@ -27,6 +27,7 @@ const transactionSchemaFields: Record<keyof ITransaction, any> = {
     type: Types.ObjectId,
     required: true,
     ref: "ProjectToken",
+    index: true,
   },
   amount: {
     type: Number,

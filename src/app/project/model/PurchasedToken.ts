@@ -23,6 +23,7 @@ const purchasedTokenSchemaFields: Record<keyof IPurchasedToken, any> = {
     type: Types.ObjectId,
     required: true,
     ref: "ProjectToken",
+    index: true,
   },
   transactionId: {
     type: Types.ObjectId,

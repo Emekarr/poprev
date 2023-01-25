@@ -22,12 +22,14 @@ const adminSchemaFields: Record<keyof IAdmin, any> = {
     required: true,
     trim: true,
     unique: true,
+    index: true,
   },
   password: { type: String, required: true },
 };
 
 const AdminSchema = new Schema(adminSchemaFields, { timestamps: true });
 
+AdminSchema.index({ email: 1 });
 AdminSchema.plugin(mongoosePaginate);
 
 AdminSchema.method("toJSON", function (this: IAdminDocument) {

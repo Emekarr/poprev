@@ -22,6 +22,7 @@ const projectTokenSchemaFields: Record<keyof IProjectToken, any> = {
   projectId: {
     type: Types.ObjectId,
     required: true,
+    unique: true,
     ref: "Project",
   },
   artisteName: { type: String, required: true, trim: true },
