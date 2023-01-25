@@ -3,7 +3,16 @@ export enum TokenType {
   RefreshToken = "refresh_token",
 }
 
-export interface UserAuthTokenPayload {
+export interface AuthTokenType {
+  email: string;
+  userId?: string;
+  adminId?: string;
+  name: string;
+  type: TokenType;
+  iss: string;
+}
+
+export interface UserAuthTokenPayload extends AuthTokenType {
   email: string;
   userId: string;
   name: string;
@@ -11,7 +20,7 @@ export interface UserAuthTokenPayload {
   iss: string;
 }
 
-export interface AdminAuthTokenPayload {
+export interface AdminAuthTokenPayload extends AuthTokenType {
   email: string;
   adminId: string;
   name: string;
