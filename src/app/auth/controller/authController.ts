@@ -5,7 +5,9 @@ import {
   TokenType,
   UserAuthTokenPayload,
 } from "../../../security/auth_tokens/type";
+import { generateOtp } from "../../../security/otp";
 import ServerResponse from "../../../utils/response";
+import { emailService } from "../../../messaging";
 import { LoginPayload } from "../types";
 import LoginAdminUseCase from "../usecases/LoginAdminUseCase";
 import LoginUserUseCase from "../usecases/LoginUserUseCase";
@@ -74,6 +76,22 @@ export default abstract class AuthController {
         },
         true
       ).respond(res, 200);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async resendOtp(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { email } = req.query;
+      const otp = await generateOtp(`${email}-otp`);
+      // send this through an event stream to avoid keeping the user waiting
+      await emailService.send(
+        email as string,
+        `Your otp is ${otp}. This OTP will last for 10 mins.`,
+        "OTP requested"
+      );
+      new ServerResponse("otp sent", null, true).respond(res, 201);
     } catch (err) {
       next(err);
     }
