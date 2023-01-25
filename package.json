@@ -30,6 +30,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.4",
     "mongoose-paginate-v2": "^1.7.1",
-    "redis": "^4.5.1"
+    "redis": "^4.5.1",
+    "uniqid": "^5.4.0"
   }
 }
