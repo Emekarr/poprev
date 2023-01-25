@@ -54,14 +54,14 @@ export default abstract class AuthController {
       const user = await LoginUserUseCase.execute(payload);
       const accessToken = await AuthTokensManager.generateAccessToken({
         email: user.email,
-        adminId: user.id,
+        userId: user.id,
         name: user.name,
         type: TokenType.AccessToken,
         iss: process.env.JWT_ISSUER,
       } as UserAuthTokenPayload);
       const refreshToken = await AuthTokensManager.generateRefreshToken({
         email: user.email,
-        adminId: user.id,
+        userId: user.id,
         name: user.name,
         type: TokenType.RefreshToken,
         iss: process.env.JWT_ISSUER,
