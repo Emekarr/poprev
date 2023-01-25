@@ -1,4 +1,11 @@
-import { Model, ClientSession, Document, Query, SaveOptions } from "mongoose";
+import {
+  Model,
+  ClientSession,
+  Document,
+  Query,
+  SaveOptions,
+  QueryOptions,
+} from "mongoose";
 
 import { PaginateOptions, Repository } from "./types";
 
@@ -138,6 +145,22 @@ export default abstract class MongoDbRepository<
     try {
       const updatedDoc = await this.model.findByIdAndUpdate(id, payload);
       if (!updatedDoc) throw new Error("Doc could not be updated");
+      success = true;
+    } catch (err) {
+      success = false;
+    }
+    return success;
+  }
+
+  async updateByIdTrx(
+    id: string,
+    payload: object,
+    opts: QueryOptions
+  ): Promise<boolean> {
+    let success!: boolean;
+    try {
+      const updatedDoc = await this.model.findByIdAndUpdate(id, payload, opts);
+      if (!updatedDoc) throw new Error("doc could not be updated");
       success = true;
     } catch (err) {
       success = false;
