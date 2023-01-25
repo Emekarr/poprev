@@ -10,6 +10,12 @@ router.get(
   ProjectController.fetchProjectTokens
 );
 
+router.get(
+  "/purchased-token/fetch",
+  AuthMiddleware(false),
+  ProjectController.fetchPurchasedTokens
+);
+
 router.post(
   "/purchase",
   AuthMiddleware(false),

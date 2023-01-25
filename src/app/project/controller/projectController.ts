@@ -4,6 +4,7 @@ import { generateOtp } from "../../../security/otp";
 import ServerResponse from "../../../utils/response";
 import { Project } from "../model/Project";
 import projectTokenRepo from "../repository/projectTokenRepo";
+import purchasedTokenRepo from "../repository/purchasedTokenRepo";
 import CreateProjectUseCase from "../usecases/project/CreateProjectUseCase";
 import PurchaseProjectTokenUseCase from "../usecases/projectToken/PurchaseProjectTokenUseCase";
 
@@ -59,6 +60,30 @@ export default abstract class ProjectController {
         req.user.id
       );
       new ServerResponse("purchase complete", result, true).respond(res, 200);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async fetchPurchasedTokens(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { page, limit, id } = req.query;
+      const tokens = await purchasedTokenRepo.findManyByFields(
+        { tokenId: id },
+        {
+          limit: Number(limit),
+          page: Number(page),
+        }
+      );
+      new ServerResponse(
+        "token purchase history fetched",
+        tokens,
+        true
+      ).respond(res, 200);
     } catch (err) {
       next(err);
     }
