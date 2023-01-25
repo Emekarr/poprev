@@ -10,7 +10,7 @@ export default abstract class AuthTokensManager {
     payload.type = TokenType.AccessToken;
     return this.generateTokens(
       payload,
-      parseInt(process.env.ACCESS_TOKEN_LIFE as string, 60) // expires in 60 mins
+      parseInt(process.env.ACCESS_TOKEN_LIFE as string, 10) // expires in 60 mins
     );
   }
 
@@ -30,7 +30,6 @@ export default abstract class AuthTokensManager {
   ) {
     return this.jwt.sign(paylaod, process.env.JWT_SECRET as string, {
       expiresIn,
-      issuer: process.env.JWT_ISSUER,
     });
   }
 
