@@ -31,6 +31,7 @@ export default abstract class PurchaseProjectTokenUseCase {
       {
         amount,
         description: `for the purchase of ${token.name} tokens`,
+        tokenId,
       },
       session
     );

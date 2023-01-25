@@ -5,6 +5,7 @@ export interface Transaction {
   description: string;
   trxId: string;
   amount: number;
+  tokenId: string;
 }
 
 export interface ITransaction extends Transaction {}
@@ -21,6 +22,11 @@ const transactionSchemaFields: Record<keyof ITransaction, any> = {
     type: String,
     required: true,
     trim: true,
+  },
+  tokenId: {
+    type: Types.ObjectId,
+    required: true,
+    ref: "ProjectToken",
   },
   amount: {
     type: Number,
