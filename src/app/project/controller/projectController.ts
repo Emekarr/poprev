@@ -3,6 +3,7 @@ import { emailService } from "../../../messaging";
 import { generateOtp } from "../../../security/otp";
 import ServerResponse from "../../../utils/response";
 import { Project } from "../model/Project";
+import projectTokenRepo from "../repository/projectTokenRepo";
 import CreateProjectUseCase from "../usecases/project/CreateProjectUseCase";
 
 export default abstract class ProjectController {
@@ -24,6 +25,26 @@ export default abstract class ProjectController {
         },
         true
       ).respond(res, 201);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async fetchProjectTokens(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { page, limit, name } = req.query;
+      const tokens = await projectTokenRepo.findManyByFields(
+        { name: { $regex: name ?? "", $options: "i" } },
+        { limit: Number(limit), page: Number(page) }
+      );
+      new ServerResponse("project tokens fetched", tokens, true).respond(
+        res,
+        200
+      );
     } catch (err) {
       next(err);
     }
