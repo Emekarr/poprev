@@ -10,4 +10,6 @@ router.post(
   ProjectController.createNewProject
 );
 
+router.get("/fetch", AuthMiddleware(true), ProjectController.fetchProjects);
+
 export default router;

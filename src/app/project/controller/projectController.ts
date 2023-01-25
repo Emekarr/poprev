@@ -3,6 +3,7 @@ import { emailService } from "../../../messaging";
 import { generateOtp } from "../../../security/otp";
 import ServerResponse from "../../../utils/response";
 import { Project } from "../model/Project";
+import projectRepo from "../repository/projectRepo";
 import projectTokenRepo from "../repository/projectTokenRepo";
 import purchasedTokenRepo from "../repository/purchasedTokenRepo";
 import CreateProjectUseCase from "../usecases/project/CreateProjectUseCase";
@@ -39,6 +40,19 @@ export default abstract class ProjectController {
         res,
         200
       );
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async fetchProjects(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { page, limit, name } = req.query;
+      const tokens = await projectRepo.findManyByFields(
+        { name: { $regex: name ?? "", $options: "i" } },
+        { limit: Number(limit), page: Number(page) }
+      );
+      new ServerResponse("project fetched", tokens, true).respond(res, 200);
     } catch (err) {
       next(err);
     }

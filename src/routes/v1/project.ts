@@ -5,7 +5,7 @@ import AuthMiddleware from "../../middleware/auth";
 const router = Router();
 
 router.get(
-  "/fetch",
+  "/tokens/fetch",
   AuthMiddleware(false),
   ProjectController.fetchProjectTokens
 );
