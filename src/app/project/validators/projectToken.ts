@@ -6,6 +6,6 @@ export const validateNewProjectTokenPayload = (payload: ProjectToken) =>
     name: Joi.string().max(200).required(),
     projectId: Joi.string().required(),
     artisteName: Joi.string().max(50).required(),
-    amount: Joi.number().positive().required,
-    amountRemaining: Joi.number().positive().required,
+    amount: Joi.number().positive().required(),
+    amountRemaining: Joi.number().positive().required(),
   }).validate(payload) as Joi.ValidationResult<ProjectToken>;

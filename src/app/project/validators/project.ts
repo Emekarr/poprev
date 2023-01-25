@@ -6,5 +6,5 @@ export const validateNewProjectPayload = (payload: Project) =>
     name: Joi.string().max(200).required(),
     createdBy: Joi.string().required(),
     artisteName: Joi.string().max(50).required(),
-    amount: Joi.number().positive().required,
+    amount: Joi.number().positive().required(),
   }).validate(payload) as Joi.ValidationResult<Project>;

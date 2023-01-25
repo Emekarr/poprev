@@ -14,14 +14,15 @@ export default abstract class ProjectController {
   ) {
     try {
       const payload: Project = req.body;
-      const { project, projectToken } = await CreateProjectUseCase.execute(
+      payload.createdBy = req.user.id;
+     await CreateProjectUseCase.execute(
         payload
       );
       new ServerResponse(
-        "user created.",
+        "project created.",
         {
-          project,
-          projectToken,
+          // project,
+          // projectToken,
         },
         true
       ).respond(res, 201);

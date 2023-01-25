@@ -1,4 +1,4 @@
-import { Model, ClientSession, Document, Query } from "mongoose";
+import { Model, ClientSession, Document, Query, SaveOptions } from "mongoose";
 
 import { PaginateOptions, Repository } from "./types";
 
@@ -91,6 +91,10 @@ export default abstract class MongoDbRepository<
 
   async createEntry(payload: any): Promise<T> {
     return await new this.model(payload).save();
+  }
+
+  async createEntryTrx(payload: any, opts?: SaveOptions): Promise<T[]> {
+    return await this.model.create([payload], opts);
   }
 
   async findById(id: string, populateKeys?: string[]): Promise<T> {
