@@ -37,6 +37,6 @@ export default abstract class CreateProjectUseCase {
       },
       dbSessions
     );
-    // return { project, projectToken };
+    return { project, projectToken };
   }
 }

@@ -17,15 +17,8 @@ export default abstract class ProjectController {
     try {
       const payload: Project = req.body;
       payload.createdBy = req.user.id;
-      await CreateProjectUseCase.execute(payload);
-      new ServerResponse(
-        "project created.",
-        {
-          // project,
-          // projectToken,
-        },
-        true
-      ).respond(res, 201);
+      const result = await CreateProjectUseCase.execute(payload);
+      new ServerResponse("project created.", result, true).respond(res, 201);
     } catch (err) {
       next(err);
     }
