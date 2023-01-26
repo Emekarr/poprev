@@ -9,7 +9,7 @@
 - Make a PR
 
 **Hosted URL**  
-[api url](https://github.com/Emekarr/poprev)
+[api url](https://poprev-production.up.railway.app)
 
 
 **Documentation**  
