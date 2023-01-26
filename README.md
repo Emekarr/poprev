@@ -9,7 +9,11 @@
 - Make a PR
 
 **Hosted URL**  
-[api url](https://to_be_filled_later.com/)
+[api url](https://github.com/Emekarr/poprev)
+
+
+**Documentation**  
+[link](https://documenter.getpostman.com/view/25448990/2s8ZDcyKD6)
 
 **Prerequisite**
 
